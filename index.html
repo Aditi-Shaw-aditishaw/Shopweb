@@ -1,35 +1,101 @@
-<!DOCTYPE html>
-<html>
 
-<head>
-    <meta charset="UTF-8">
+<script src="index.js"></script><!DOCTYPE html>
+<html>
+  <head>
     <title>Registration Form</title>
     <style>
-        .error {
-            color: red;
-        }
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        padding: 0;
+        background-color: #f2f2f2;
+      }
+      
+      form {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+      }
+      
+      h1 {
+        text-align: center;
+      }
+      
+      label {
+        display: block;
+        margin-bottom: 5px;
+      }
+      
+      input[type="text"], input[type="email"], input[type="date"], select {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 3px;
+        margin-bottom: 15px;
+        font-size: 16px;
+      }
+      
+      input[type="submit"] {
+        background-color: #4CAF50;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 3px;
+        cursor: pointer;
+        font-size: 16px;
+      }
+      
+      .error {
+        color: red;
+        font-size: 14px;
+        margin-bottom: 5px;
+      }
+      
+      .entries {
+        margin-top: 20px;
+      }
+      
+      .entries label {
+        font-weight: bold;
+        display: block;
+      }
+      
+      .entries p {
+        margin: 5px 0;
+      }
     </style>
-</head>
-
-<body>
-    <h1>Registration Form</h1>
-    <form id="registration-form">
-        <label for="name">Name:</label>
-        <input type="text" id="name" name="name" required><br><br>
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email" required><br><br>
-        <label for="dob">Date of Birth:</label>
-        <input type="date" id="dob" name="dob" required><br>
-        <span class="error" id="dob-error"></span><br><br>
-        <input type="submit" value="Submit">
-
-        <input type="checkbox" id="acceptTerms" name="acceptTerms" <label for="acceptTerms">Accept Terms & conditions</label>
+  </head>
+  <body>
+    <form id="registration-form" onsubmit="handleSubmit(event)">
+      <h1>Registration Form</h1>
+      <label for="name">Name</label>
+      <input type="text" id="name" name="name" required>
+      <label for="email">Email</label>
+      <input type="email" id="email" name="email" required>
+      <label for="dob">Date of Birth</label>
+      <input type="date" id="dob" name="dob" max="2005-03-13" min="1968-03-13" required>
+      <div id="dob-error" class="error"></div>
+      <label for="gender">Gender</label>
+      <select id="gender" name="gender">
+        <option value="">Select gender...</option>
+        <option value="male">Male</option>
+        <option value="female">Female</option>
+        <option value="other">Other</option>
+      </select>
+      <input type="submit" value="Submit">
     </form>
-    <br>
-    <h2>Entries:</h2>
-    <ul id="entries-list"></ul>
-    <script src="registration.js"></script>
-</body>
-
-</html>
-<script src="index.js"></script>
+    
+    <div class="entries" id="entries"></div>
+    
+    <script>
+      function handleSubmit(event) {
+        event.preventDefault();
+        
+        const name = document.getElementById("name").value;
+        const email = document.getElementById("email").value;
+        const dob = document.getElementById("dob").value;
+        const gender = document.getElementById("gender").value;

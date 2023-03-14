@@ -1,78 +1,64 @@
-const form = document.getElementById('regForm');
-const nameInput = document.getElementById('name');
-const emailInput = document.getElementById('email');
-const passwordInput = document.getElementById('password');
-const dobInput = document.getElementById('dob');
-const termsInput = document.getElementById('terms');
-const userTableBody = document.getElementById('userTableBody');
+const form = document.getElementById("registration-form");
+const table = document.getElementById("users").getElementsByTagName('tbody')[0];
 
-// Load previously saved entries from local storage
-let savedEntries = JSON.parse(localStorage.getItem('entries')) || [];
+// Load existing users from local storage
+let users = JSON.parse(localStorage.getItem("users")) || [];
 
-// Display previously saved entries in the table
-for (let i = 0; i < savedEntries.length; i++) {
-    let user = savedEntries[i];
-    let row = document.createElement('tr');
-    row.innerHTML = `<td>${user.name}</td><td>${user.email}</td><td>${user.password}</td><td>${user.dob}</td><td>${user.acceptedTerms ? 'Yes' : 'No'}</td>`;
-    userTableBody.appendChild(row);
-}
-
-form.addEventListener('submit'), (event) => {
-    event.preventDefault();
-    // Create a new user object
-    let newUser = {
-        name: nameInput.value,
-        email: emailInput.value,
-        password: passwordInput.value,
-        dob: dobInput.value,
-        acceptedTerms: termsInput.checked
-    };
-}
-const registrationForm = document.querySelector('#registration-form');
-const entriesTable = document.querySelector('#entries-table tbody');
-
-function addEntryToTable(name, email, password, dob, acceptedTerms) {
-    const newRow = document.createElement('tr');
-    newRow.innerHTML = `
-    <td>${name}</td>
-    <td>${email}</td>
-    <td>${password}</td>
-    <td>${dob}</td>
-    <td>${acceptedTerms ? 'Yes' : 'No'}</td>
-  `;
-    entriesTable.appendChild(newRow);
-}
-
-registrationForm.addEventListener('submit', (event) => {
-    event.preventDefault();
-
-    const name = document.querySelector('#name').value;
-    const email = document.querySelector('#email').value;
-    const password = document.querySelector('#password').value;
-    const dob = document.querySelector('#dob').value;
-    const acceptedTerms = document.querySelector('input[name="accept-terms"]').checked;
-
-    const dobDate = new Date(dob);
-    const age = new Date(Date.now() - dobDate.getTime()).getUTCFullYear() - 1970;
-
-    if (age < 18 || age > 55) {
-        alert('You must be between 18 and 55 years old to register.');
-        return;
-    }
-
-    if (!email.includes('@')) {
-        alert('Invalid email address.');
-        return;
-    }
-    addEntryToTable(name, email, password, dob, acceptedTerms);
-
-    localStorage.setItem(email, JSON.stringify({
-        name,
-        email,
-        password,
-        dob,
-        acceptedTerms,
-    }));
-
-    registrationForm.reset();
+// Add existing users to the table
+users.forEach(function(user) {
+    addRow(user.name, user.email, user.password, user.dob, user.terms);
 });
+
+// Add a new user to the table and store it in local storage
+form.addEventListener("submit", function(event) {
+    event.preventDefault();
+
+    const name = form.elements.name.value.trim();
+    const email = form.elements.email.value.trim();
+    const password = form.elements.password.value.trim();
+    const dob = form.elements.dob.value;
+    const terms = form.elements.terms.checked;
+
+    // Validate email format
+    if (!/\S+@\S+\.\S+/.test(email)) {
+        alert("Invalid email format");
+        return;
+    }
+
+    // Validate age
+    const birthDate = new Date(dob);
+    const age = calculateAge(birthDate);
+    if (age < 18 || age > 55) {
+        alert("You must be between 18 and 55 years old to register");
+        return;
+    }
+
+    // Add the new user to the table and local storage
+    addRow(name, email, password, dob, terms);
+    users.push({ name, email, password, dob, terms });
+    localStorage.setItem("users", JSON.stringify(users));
+
+    // Clear the form
+    form.reset();
+});
+
+// Add a new row to the table
+function addRow(name, email, password, dob, terms) {
+    const row = table.insertRow();
+    const nameCell = row.insertCell();
+    const emailCell = row.insertCell();
+    const passwordCell = row.insertCell();
+    const dobCell = row.insertCell();
+    const termsCell = row.insertCell();
+
+    nameCell.textContent = name;
+    emailCell.textContent = email;
+    passwordCell.textContent = password;
+    dobCell.textContent = dob;
+    termsCell.textContent = terms ? "Yes" : "No";
+}
+
+// Calculate age from date of birth
+function calculateAge(birthDate) {
+    const now = new Date();
+}

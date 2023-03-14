@@ -2,47 +2,34 @@
 <html>
 
 <head>
-    <meta charset="UTF-8">
     <title>Age Verified Registration Form</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 
 <body>
     <h1>Age Verified Registration Form</h1>
-    <form id="registration-form">
+    <form onsubmit="event.preventDefault();">
         <label for="name">Name:</label>
-        <input type="text" id="name" required><br><br>
-
+        <input type="text" id="name" required><br>
         <label for="email">Email:</label>
-        <input type="email" id="email" required><br><br>
-
+        <input type="email" id="email" required><br>
         <label for="password">Password:</label>
-        <input type="password" id="password" required><br><br>
-
-        <label for="dob">Date of Birth:</label>
-        <input type="date" id="dob" required><br><br>
-
-        <label for="terms">I accept the terms and conditions:</label>
-        <input type="checkbox" id="terms" required><br><br>
-
-        <button type="submit">Register</button>
+        <input type="password" id="password" required><br>
+        <label for="dob">Date of birth:</label>
+        <input type="date" id="dob" required><br>
+        <label for="accepted">I accept the terms and conditions:</label>
+        <input type="checkbox" id="accepted" required><br>
+        <input type="submit" value="Register" onclick="saveData(
+      document.getElementById('name').value,
+      document.getElementById('email').value,
+      document.getElementById('password').value,
+      document.getElementById('dob').value,
+      document.getElementById('accepted').checked
+    ); displayData();">
     </form>
-
-    <h2>Registered Users</h2>
-    <table id="users">
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Password</th>
-                <th>DOB</th>
-                <th>Accepted Terms</th>
-            </tr>
-        </thead>
-        <tbody></tbody>
-    </table>
-
+    <table id="user_table"></table>
 </body>
 
 </html>
-
 <script src="index.js"></script>

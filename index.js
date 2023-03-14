@@ -1,59 +1,43 @@
-const form = document.getElementById("registration-form");
-const table = document.getElementById("users").getElementsByTagName('tbody')[0];
-
-// Load existing users from local storage
-let users = JSON.parse(localStorage.getItem("users")) || [];
-
-// Add existing users to the table
-users.forEach(function(user) {
-    addRow(user.name, user.email, user.password, user.dob, user.terms);
-});
-
-// Add a new user to the table and store it in local storage
-form.addEventListener("submit", function(event) {
-    event.preventDefault();
-
-    const name = form.elements.name.value.trim();
-    const email = form.elements.email.value.trim();
-    const password = form.elements.password.value.trim();
-    const dob = form.elements.dob.value;
-    const terms = form.elements.terms.checked;
-
-    // Validate email format
-    if (!/\S+@\S+\.\S+/.test(email)) {
-        alert("Invalid email format");
-        return;
+// function to save user data to local storage
+function saveData(name, email, password, dob, accepted) {
+    var data = {
+        name: name,
+        email: email,
+        password: password,
+        dob: dob,
+        accepted: accepted
+    };
+    // check if data already exists in local storage
+    var storedData = JSON.parse(localStorage.getItem("user_data"));
+    if (storedData == null) {
+        storedData = [];
     }
-
-    // Validate age
-    const birthDate = new Date(dob);
-    const age = calculateAge(birthDate);
-    if (age < 18 || age > 55) {
-        alert("You must be between 18 and 55 years old to register");
-        return;
-    }
-
-    // Add the new user to the table and local storage
-    addRow(name, email, password, dob, terms);
-    users.push({ name, email, password, dob, terms });
-    localStorage.setItem("users", JSON.stringify(users));
-
-    // Clear the form
-    form.reset();
-});
-
-// Add a new row to the table
-function addRow(name, email, password, dob, terms) {
-    const row = table.insertRow();
-    const nameCell = row.insertCell();
-    const emailCell = row.insertCell();
-    const passwordCell = row.insertCell();
-    const dobCell = row.insertCell();
-    const termsCell = row.insertCell();
-
-    nameCell.textContent = name;
-    emailCell.textContent = email;
-    passwordCell.textContent = password;
-    dobCell.textContent = dob;
-    termsCell.textContent = terms ? "Yes" : "No";
+    // add new data to existing data array
+    storedData.push(data);
+    // save data back to local storage
+    localStorage.setItem("user_data", JSON.stringify(storedData));
 }
+
+// function to display user data in a table
+function displayData() {
+    var data = JSON.parse(localStorage.getItem("user_data"));
+    var table = document.getElementById("user_table");
+    // clear previous data
+    table.innerHTML = "<tr><th>Name</th><th>Email</th><th>Password</th><th>DOB</th><th>Accepted terms?</th></tr>";
+    // loop through data and add new rows to table
+    for (var i = 0; i < data.length; i++) {
+        var row = table.insertRow(-1);
+        var nameCell = row.insertCell(0);
+        var emailCell = row.insertCell(1);
+        var passwordCell = row.insertCell(2);
+        var dobCell = row.insertCell(3);
+        var acceptedCell = row.insertCell(4);
+        nameCell.innerHTML = data[i].name;
+        emailCell.innerHTML = data[i].email;
+        passwordCell.innerHTML = data[i].password;
+        dobCell.innerHTML = data[i].dob;
+        acceptedCell.innerHTML = data[i].accepted ? "Yes" : "No";
+    }
+}
+
+displayData();

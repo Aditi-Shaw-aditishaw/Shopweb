@@ -1,6 +1,5 @@
 let savedUsers = JSON.parse(localStorage.getItem("users")) || [];
 
-// Function to save new user data to local storage
 function saveUser(user) {
     savedUsers.push(user);
     localStorage.setItem("users", JSON.stringify(savedUsers));

@@ -1,3 +1,33 @@
+const form = document.getElementById('regForm');
+const nameInput = document.getElementById('name');
+const emailInput = document.getElementById('email');
+const passwordInput = document.getElementById('password');
+const dobInput = document.getElementById('dob');
+const termsInput = document.getElementById('terms');
+const userTableBody = document.getElementById('userTableBody');
+
+// Load previously saved entries from local storage
+let savedEntries = JSON.parse(localStorage.getItem('entries')) || [];
+
+// Display previously saved entries in the table
+for (let i = 0; i < savedEntries.length; i++) {
+    let user = savedEntries[i];
+    let row = document.createElement('tr');
+    row.innerHTML = `<td>${user.name}</td><td>${user.email}</td><td>${user.password}</td><td>${user.dob}</td><td>${user.acceptedTerms ? 'Yes' : 'No'}</td>`;
+    userTableBody.appendChild(row);
+}
+
+form.addEventListener('submit'), (event) => {
+    event.preventDefault();
+    // Create a new user object
+    let newUser = {
+        name: nameInput.value,
+        email: emailInput.value,
+        password: passwordInput.value,
+        dob: dobInput.value,
+        acceptedTerms: termsInput.checked
+    };
+}
 const registrationForm = document.querySelector('#registration-form');
 const entriesTable = document.querySelector('#entries-table tbody');
 
@@ -34,7 +64,6 @@ registrationForm.addEventListener('submit', (event) => {
         alert('Invalid email address.');
         return;
     }
-
     addEntryToTable(name, email, password, dob, acceptedTerms);
 
     localStorage.setItem(email, JSON.stringify({
@@ -47,7 +76,3 @@ registrationForm.addEventListener('submit', (event) => {
 
     registrationForm.reset();
 });
-
-for (let i = 0; i < localStorage.length; i++) {
-    const key = localStorage.key
-}

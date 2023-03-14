@@ -57,16 +57,3 @@ function addRow(name, email, password, dob, terms) {
     dobCell.textContent = dob;
     termsCell.textContent = terms ? "Yes" : "No";
 }
-
-let validEmail = emailInput.checkValidity();
-let age = calculateAge(new Date(dobInput.value));
-
-if (!validEmail) {
-    alert('Please enter a valid email address');
-    return;
-}
-
-if (age < 18 || age > 55) {
-    alert('You must be between 18 and 55 years old to register');
-    return;
-}

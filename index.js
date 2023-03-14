@@ -1,10 +1,3 @@
-let savedUsers = JSON.parse(localStorage.getItem("users")) || [];
-
-function saveUser(user) {
-    savedUsers.push(user);
-    localStorage.setItem("users", JSON.stringify(savedUsers));
-}
-
 const registrationForm = document.querySelector('#registration-form');
 const entriesTable = document.querySelector('#entries-table tbody');
 

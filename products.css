@@ -1,0 +1,117 @@
+body {
+    background: #ffcdee;
+    margin: 0px;
+}
+
+h2 {
+    font-family: monospace;
+    text-align: center;
+}
+
+button {
+    display: flex;
+    justify-content: center;
+    width: 20%;
+    margin-top: 12px;
+    background-color: rgb(255, 226, 120);
+    color: rgb(100, 35, 35);
+    padding: 12px 20px;
+    position: absolute;
+    font-size: 25px;
+}
+
+.propara {
+    display: flex;
+    justify-content: left;
+    align-items: left;
+    text-align: left;
+}
+
+.shopbtn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+nav {
+    height: 60px;
+    background-color: #790000;
+    color: #790000;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+nav a {
+    color: #ffd502;
+    margin: 5%;
+    text-decoration: none;
+}
+
+nav :hover {
+    color: #ffc0eb;
+}
+
+b {
+    font-weight: bolder;
+    font-size: x-large;
+    text-align: center;
+    justify-content: center;
+}
+
+#image {
+    margin: 10px;
+}
+
+footer {
+    padding: auto;
+    background: #fff984;
+    text-align: center;
+}
+
+h1 {
+    margin: 1%;
+    background-color: aqua;
+    font-family: initial;
+    text-align: center;
+    border-radius: 12px;
+}
+
+#insta {
+    padding: 5px;
+    border-radius: 5px;
+    margin: 5px;
+    background-color: rgb(255, 0, 166);
+    color: #ffffff;
+    float: center;
+}
+
+#face {
+    padding: 5px;
+    border-radius: 5px;
+    margin: 5px;
+    background-color: rgb(0, 23, 193);
+    color: #ffffff;
+    float: center;
+}
+
+#profile {
+    padding: 10px;
+    border-radius: 5px;
+    margin: 5px;
+    background-color: #ff6868;
+    float: right;
+    color: #ffd500;
+}
+
+
+/*responsive*/
+
+@media screen and (max-width: 1699px) {
+    #image {
+        width: 300px;
+        height: 300px;
+        align-items: center;
+        justify-content: center;
+    }
+}
